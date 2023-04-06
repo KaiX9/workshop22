@@ -108,7 +108,7 @@ public class RSVPRepository {
 
     public boolean updateRSVP(RSVP existingRSVP) {
         
-        return jdbcTemplate.update(UPDATE_RSVP_BY_EMAIL, 
+        return jdbcTemplate.update(UPDATE_RSVP_BY_EMAIL_POST, 
                 existingRSVP.getName(),     
                 existingRSVP.getPhone(), 
                 new Timestamp(existingRSVP.getConfirmationDate().toDateTime().getMillis()), 
@@ -118,7 +118,7 @@ public class RSVPRepository {
 
     public boolean updateRSVPforPut(RSVP rsvp, String emailInput) {
 
-        return jdbcTemplate.update(UPDATE_RSVP_BY_EMAIL, 
+        return jdbcTemplate.update(UPDATE_RSVP_BY_EMAIL_PUT, 
                 rsvp.getName(),     
                 rsvp.getPhone(), 
                 new Timestamp(rsvp.getConfirmationDate().toDateTime().getMillis()), 

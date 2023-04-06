@@ -14,7 +14,10 @@ public class DBQueries {
     public static final String INSERT_NEW_RSVP
         = "INSERT INTO rsvp (name, email, phone, confirmation_date, comments) VALUES(?, ?, ?, ?, ?)";
 
-    public static final String UPDATE_RSVP_BY_EMAIL
+    public static final String UPDATE_RSVP_BY_EMAIL_POST
+        = "update rsvp set name = ?, phone = ?, confirmation_date = ?, comments = ? where email = ?";
+
+    public static final String UPDATE_RSVP_BY_EMAIL_PUT
         = "update rsvp set name = ?, phone = ?, confirmation_date = ?, comments = ?, email = ? where email = ?";
 
     public static final String SELECT_RSVPS_COUNT
