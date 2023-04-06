@@ -111,6 +111,12 @@ public class RSVP {
         return dateTime;
     }
 
+    public static DateTime getDateTimeFromForm(String date) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+        DateTime dateTime = formatter.parseDateTime(date);
+        return dateTime;
+    }
+
     public JsonObject toJSON() {
         
         return Json.createObjectBuilder()

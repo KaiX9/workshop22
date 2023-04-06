@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSVP Form</title>
+</head>
+<body>
+
+    <h2>RSVP</h2>
+
+    <form method="POST" data-th-action="@{/api/rsvp/form}" data-th-object="${rsvp}">
+        <table>
+            <tr>
+                <td>
+                    <label for="name">Name:</label>
+                </td>
+                <td>
+                    <input type="text" name="name" id="name" size="30"
+                        placeholder="Please input name" data-th-field="*{name}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="email">Email:</label>
+                </td>
+                <td>
+                    <input type="text" name="email" id="email" size="30"
+                        placeholder="Please input email" data-th-field="*{email}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="phone">Phone:</label>
+                </td>
+                <td>
+                    <input type="text" name="phone" id="phone" size="30"
+                        placeholder="Please input phone" data-th-field="*{phone}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="confirmation_date">Confirmation Date:</label>
+                </td>
+                <td>
+                    <input type="text" name="confirmation_date" id="confirmation_date" size="30"
+                        placeholder="Please input confirmation date">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="comments">Comments:</label>
+                </td>
+                <td>
+                    <textarea name="comments" id="comments" cols="30" rows="10" data-th-field="*{comments}"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit">Post</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

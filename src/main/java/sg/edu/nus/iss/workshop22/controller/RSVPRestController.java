@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -80,6 +81,22 @@ public class RSVPRestController {
 
         RSVP rsvp = new RSVP();
         rsvp = RSVP.create(json); // converting json to java object
+        RSVP result = RSVPRepo.createRSVP(rsvp);
+
+        JsonObject jsonObj = Json.createObjectBuilder()
+            .add("rsvpID", result.getId())
+            .build();
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(jsonObj.toString());
+    }
+
+    @PostMapping(path="/rsvp/form")
+    public ResponseEntity<String> insertUpdateRSVP(@ModelAttribute RSVP rsvp
+        , @RequestParam String confirmation_date) {
+
+        rsvp.setConfirmationDate(RSVP.getDateTimeFromForm(confirmation_date));
         RSVP result = RSVPRepo.createRSVP(rsvp);
 
         JsonObject jsonObj = Json.createObjectBuilder()
