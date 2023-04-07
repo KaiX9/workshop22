@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>RSVPs</h1>
+    <form>
+        <p>Get all RSVPs?</p>
+        <button type="button" onclick="getAllRSVPs()">Get</button>
+        <hr>
+        <div id="json"></div>
+    </form>
+
+    <script src = "https://code.jquery.com/jquery-3.6.0.js"></script>
+
+    <script>
+        function getAllRSVPs(){
+            $.ajax({
+                url: '/api/rsvps',
+                success: function(data){
+                    // create an array of HTML strings
+                    var html = data.map(function(rsvp) {
+                        return `
+                            <div>
+                                <span>ID: ${rsvp.id} </span><br>
+                                <span>Name: ${rsvp.name} </span><br>
+                                <span>Email: ${rsvp.email} </span><br>
+                                <span>Phone: ${rsvp.phone} </span><br>
+                                <span>Confirmation Date: ${rsvp.confirmation_date} </span><br>
+                                <span>Comments: ${rsvp.comments} </span><br>
+                            </div>
+                            `;
+                        });
+
+                    // join the array of strings into a single string
+                    var htmlString = html.join('');
+
+                    // update the #json element
+                    $("#json").html(htmlString);
+                },
+            })
+        }
+    </script>
+</body>
+</html>

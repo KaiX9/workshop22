@@ -30,6 +30,7 @@ public class RSVPRestController {
     @Autowired
     private RSVPRepository RSVPRepo;
 
+    // Get all RSVPs via postman
     @GetMapping(path="/rsvps")
     public ResponseEntity<String> getAllRSVP() {
 
@@ -49,6 +50,7 @@ public class RSVPRestController {
                 .body(result.toString());
     }
     
+    // Get RSVP by name via postman
     @GetMapping(path="/rsvp")
     public ResponseEntity<String> getRSVPByName(@RequestParam String name) {
 
@@ -76,6 +78,35 @@ public class RSVPRestController {
 
     }
 
+    // Get RSVP by name via html form
+    @GetMapping(path="/rsvp/form/name")
+    public ResponseEntity<String> getRSVPFormByName(@RequestParam String name) {
+
+        List<RSVP> rsvp = RSVPRepo.getRSVPByName(name);
+
+        JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+
+        for (RSVP r : rsvp) {
+            arrBuilder.add(r.toJSON());
+        }
+
+        JsonArray result = arrBuilder.build();
+
+        if (rsvp.isEmpty()) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("{'error message' : " + HttpStatus.NOT_FOUND + "}");
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(result.toString());
+
+    }
+
+    // Post method to insert/update RSVP via postman
     @PostMapping(path="/rsvp")
     public ResponseEntity<String> insertUpdateRSVP(@RequestBody String json) throws Exception {
 
@@ -92,6 +123,7 @@ public class RSVPRestController {
             .body(jsonObj.toString());
     }
 
+    // Post method to insert/update RSVP via html form
     @PostMapping(path="/rsvp/form")
     public ResponseEntity<String> insertUpdateRSVP(@ModelAttribute RSVP rsvp
         , @RequestParam String confirmation_date) {
@@ -108,12 +140,12 @@ public class RSVPRestController {
             .body(jsonObj.toString());
     }
 
+    // Put method to update RSVP by email via postman 
     @PutMapping(path="/rsvp/{email}")
     public ResponseEntity<String> updateExistingRSVP(@PathVariable String email
         , @RequestBody String json) throws Exception {
 
         RSVP rsvp = RSVP.create(json);
-        // RSVP existingRSVP = RSVPRepo.getRSVPByEmail(email);
         boolean result = RSVPRepo.updateRSVPforPut(rsvp, email);
         
         if (!result) {
@@ -127,6 +159,7 @@ public class RSVPRestController {
             .body("{'success' : updated for " + email + "}");
     }
 
+    // Put method to update RSVP by email via html form
     @PutMapping(path="/rsvp/form/{emailInput}")
     public ResponseEntity<String> updateExistingRSVPForm(@ModelAttribute RSVP rsvp
         ,@PathVariable String emailInput, @RequestParam String confirmation_date) {
@@ -145,6 +178,7 @@ public class RSVPRestController {
                 .body("{'success' : updated for " + rsvp.getEmailInput() + "}");
     }
 
+    // Get total count of RSVPs via postman
     @GetMapping(path="/rsvps/count")
     public ResponseEntity<String> getTotalRSVPCounts() {
         

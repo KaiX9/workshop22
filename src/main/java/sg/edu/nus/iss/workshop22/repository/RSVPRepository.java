@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -48,6 +49,17 @@ public class RSVPRepository {
             rsvp.add(RSVP.create(rs));
         }
         return rsvp;
+    }
+
+    public Optional<RSVP> getRSVPByNameForm(String name) {
+        
+        String correctName = "%" + name + "%";
+        SqlRowSet rs = jdbcTemplate.queryForRowSet(SELECT_RSVP_BY_NAME, correctName);
+        
+        if (rs.first()) {
+            return Optional.of(RSVP.create(rs));
+        }
+        return Optional.empty();
     }
 
     public RSVP getRSVPByEmail(String email) {

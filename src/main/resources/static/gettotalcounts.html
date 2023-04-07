@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total RSVP Counts</title>
+</head>
+<body>
+    <h1>Total RSVP Counts</h1>
+    <form>
+        <p>Get total counts of RSVPs?</p>
+        <button type="button" onclick="getTotalCounts()">Generate count!</button>
+        <hr>
+        <div id="json"></div>
+    </form>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+    <script>
+        function getTotalCounts(){
+            $.ajax({
+                url: '/api/rsvps/count',
+                success: function(data){
+                    $("#json").html(`
+                    <span> Total RSVP Counts : ${data.total_count} </span><br>
+                    `);
+                },
+            });
+        }
+    </script>
+</body>
+</html>

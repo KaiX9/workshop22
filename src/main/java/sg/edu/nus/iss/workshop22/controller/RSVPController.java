@@ -12,6 +12,7 @@ import sg.edu.nus.iss.workshop22.model.RSVP;
 @RequestMapping
 public class RSVPController {
     
+    // Insert/update RSVP via html form
     @GetMapping(path={"/", "/api/rsvp"})
     public String insertUpdateRSVP(Model m, @ModelAttribute RSVP rsvp) {
         
@@ -19,10 +20,19 @@ public class RSVPController {
         return "index";
     }
 
+    // Update RSVP by email via html form
     @GetMapping(path="/api/rsvp/put")
     public String updateRSVPByEmail(Model m, @ModelAttribute RSVP rsvp) {
         
         m.addAttribute("rsvp", rsvp);
         return "put";
+    }
+
+    // Get RSVP by name via html form
+    @GetMapping(path="/api/rsvp/name")
+    public String getRSVPByName(Model m, @ModelAttribute String name) {
+
+        m.addAttribute("rsvp", new RSVP());
+        return "getbyname";
     }
 }
