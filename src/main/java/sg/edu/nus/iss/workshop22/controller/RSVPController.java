@@ -9,13 +9,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import sg.edu.nus.iss.workshop22.model.RSVP;
 
 @Controller
-@RequestMapping(path={"/", "/api/rsvp"})
+@RequestMapping
 public class RSVPController {
     
-    @GetMapping
+    @GetMapping(path={"/", "/api/rsvp"})
     public String insertUpdateRSVP(Model m, @ModelAttribute RSVP rsvp) {
         
         m.addAttribute("rsvp", rsvp);
         return "index";
+    }
+
+    @GetMapping(path="/api/rsvp/put")
+    public String updateRSVPByEmail(Model m, @ModelAttribute RSVP rsvp) {
+        
+        m.addAttribute("rsvp", rsvp);
+        return "put";
     }
 }

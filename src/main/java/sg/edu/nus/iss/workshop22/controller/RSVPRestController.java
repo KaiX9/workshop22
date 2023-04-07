@@ -127,6 +127,24 @@ public class RSVPRestController {
             .body("{'success' : updated for " + email + "}");
     }
 
+    @PutMapping(path="/rsvp/form/{emailInput}")
+    public ResponseEntity<String> updateExistingRSVPForm(@ModelAttribute RSVP rsvp
+        ,@PathVariable String emailInput, @RequestParam String confirmation_date) {
+
+        rsvp.setConfirmationDate(RSVP.getDateTimeFromForm(confirmation_date));
+        boolean result = RSVPRepo.updateRSVPforPut(rsvp, rsvp.getEmailInput());
+
+        if (!result) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("{'error message' : " + rsvp.getEmailInput() + " not found}");
+            }
+            
+            return ResponseEntity.status(HttpStatus.CREATED)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("{'success' : updated for " + rsvp.getEmailInput() + "}");
+    }
+
     @GetMapping(path="/rsvps/count")
     public ResponseEntity<String> getTotalRSVPCounts() {
         

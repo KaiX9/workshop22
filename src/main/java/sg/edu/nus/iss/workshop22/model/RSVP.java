@@ -20,6 +20,15 @@ public class RSVP {
     private String phone;
     private DateTime confirmationDate;
     private String comments;
+    private String emailInput;
+
+    public String getEmailInput() {
+        return emailInput;
+    }
+
+    public void setEmailInput(String emailInput) {
+        this.emailInput = emailInput;
+    }
 
     public RSVP() {
 
