@@ -8,12 +8,14 @@
 </head>
 <body>
     <h1>Whose RSVP do you want to get?</h1>
-    <form method="GET" data-th-action="@{/api/rsvp/form/name}" data-th-object="${rsvp}">
+    <form method="GET" data-th-action="@{/name}" data-th-object="${rsvp}">
         <table>
             <tr>
                 <td>Name:</td>
+                <!--apparently, displaying on results on same page cannot use data-th-field
+                , otherwise error-->
                 <td><input type="text" name="name" id="name" size="30"
-                        placeholder="Input name" data-th-field="*{name}"></td>
+                    placeholder="Input name"></td>
             </tr>
             <tr>
                 <td></td>
@@ -23,5 +25,38 @@
             </tr>
         </table>
     </form>
+    <hr>
+    <div data-th-if="${display}">
+        <table data-th-each="r : ${rsvpList}">
+            <tr>
+                <td>ID:</td>
+                <td data-th-text="${r.id}"></td>
+            </tr>
+            <tr>
+                <td>Name:</td>
+                <td data-th-text="${r.name}"></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td data-th-text="${r.email}"></td>
+            </tr>
+            <tr>
+                <td>Phone:</td>
+                <td data-th-text="${r.phone}"></td>
+            </tr>
+            <tr>
+                <td>Confirmation Date:</td>
+                <td data-th-text="${r.confirmationDate}"></td>
+            </tr>
+            <tr>
+                <td>Comments:</td>
+                <td data-th-text="${r.comments}"></td>
+            </tr>
+            <br>
+        </table>
+    </div>
+    <div data-th-if="${error}">
+        <h4>No records found!</h4>
+    </div>
 </body>
 </html>

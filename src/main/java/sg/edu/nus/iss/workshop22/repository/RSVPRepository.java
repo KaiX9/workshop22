@@ -44,9 +44,15 @@ public class RSVPRepository {
         List<RSVP> rsvp = new ArrayList<RSVP>();
         SqlRowSet rs = jdbcTemplate.queryForRowSet(SELECT_RSVP_BY_NAME, correctName);
 
-        while (rs.next()) {
-            rsvp.add(RSVP.create(rs));
-        }
+        // to return rsvp as null if there are no details from db
+        if (!rs.next()) {
+            rsvp = null;
+        } else {
+            do {
+                rsvp.add(RSVP.create(rs));
+            } while (rs.next()); 
+        } 
+        
         return rsvp;
     }
 
